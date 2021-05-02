@@ -1,6 +1,26 @@
 const express = require("express");
+const mongoose = require("mongoose");
+
+const { MONGOURI } = require("./keys");
+
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+//require models
+require("./models/post");
+require("./models/category");
+// end require models
+
+//mongodb
+mongoose.connect(MONGOURI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+mongoose.connection.on("connected", () => {
+  console.log("Connected to MongoDB");
+});
+
+mongoose.connection.on("error", (error) => {
+  console.log("Error: " + error);
+});
 
 //routes
 app.get("/", (req, res) => {
@@ -14,6 +34,9 @@ app.get("/home", (req, res) => {
 app.get("/category", (req, res) => {
   res.send("Categories...");
 });
+
+app.use(express.json());
+app.use(require("./routes/post"), require("./routes/category"));
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
