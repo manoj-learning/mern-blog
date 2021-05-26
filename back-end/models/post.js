@@ -17,6 +17,10 @@ const post = mongoose.Schema({
     type: ObjectId,
     ref: "Category",
   },
+  numberOfLikes: {
+    type: Number,
+    default: 0,
+  },
 });
 
 mongoose.model("Post", post);

@@ -10,7 +10,36 @@ router.get("/posts", (req, res) => {
     .populate("category", "_id name")
     .then((posts) => {
       res.json({
-        posts,
+        posts: posts,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+router.get("/posts/trending", (req, res) => {
+  Post.find()
+    .sort({ numberOfLikes: -1 })
+    .populate("category", "_id name")
+    .then((posts) => {
+      res.json({
+        trending: posts,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+router.get("/posts/latest", (req, res) => {
+  Post.find()
+    .sort({ _id: -1 })
+    .limit(3)
+    .populate("category", "_id name")
+    .then((posts) => {
+      res.json({
+        latest: posts,
       });
     })
     .catch((error) => {
@@ -19,7 +48,7 @@ router.get("/posts", (req, res) => {
 });
 
 router.post("/posts/add", (req, res) => {
-  const { title, description, imageUrl, category } = req.body;
+  const { title, description, imageUrl, category, numberOfLikes } = req.body;
 
   if (!title || !description || !imageUrl) {
     res.status(400).json({ error: "All fields are required" });
@@ -30,6 +59,7 @@ router.post("/posts/add", (req, res) => {
     description,
     imageUrl,
     category,
+    numberOfLikes,
   });
 
   post
@@ -44,5 +74,7 @@ router.post("/posts/add", (req, res) => {
       console.log(error);
     });
 });
+
+//router.get();
 
 module.exports = router;
