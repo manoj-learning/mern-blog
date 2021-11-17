@@ -24,3 +24,9 @@ jobs:
 
       - name: Experiment - pwd
         run: pwd
+      
+      - name: Experiment - cd
+        run: cd back-end/
+
+      - name: Experiment - pwd
+      run: pwd
