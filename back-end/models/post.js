@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Schema.Types;
 const post = mongoose.Schema({
   title: {
     type: String,
@@ -14,7 +13,7 @@ const post = mongoose.Schema({
     required: true,
   },
   category: {
-    type: ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Category",
   },
   numberOfLikes: {
