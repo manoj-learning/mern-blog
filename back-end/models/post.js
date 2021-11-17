@@ -21,6 +21,10 @@ const post = mongoose.Schema({
     type: Number,
     default: 0,
   },
+  isFeatured: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 mongoose.model("Post", post);

@@ -5,8 +5,20 @@ const mongoose = require("mongoose");
 const { route } = require("./category");
 const Post = mongoose.model("Post");
 
-router.get("/posts", (req, res) => {
+router.get("/post/all", (req, res) => {
   Post.find()
+    .populate("category", "_id name")
+    .then((posts) => {
+      res.json({
+        posts: posts,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+router.get("/posts/featured", (req, res) => {
+  Post.find({ isFeatured: true })
     .populate("category", "_id name")
     .then((posts) => {
       res.json({
@@ -48,19 +60,14 @@ router.get("/posts/latest", (req, res) => {
 });
 
 router.post("/posts/add", (req, res) => {
-  const { title, description, imageUrl, category, numberOfLikes } = req.body;
+  const { title, description, imageUrl, category, numberOfLikes, isFeatured } =
+    req.body;
 
-  if (!title || !description || !imageUrl) {
+  if (!title || !description || !imageUrl || !category) {
     res.status(400).json({ error: "All fields are required" });
   }
 
-  const post = new Post({
-    title,
-    description,
-    imageUrl,
-    category,
-    numberOfLikes,
-  });
+  const post = new Post(req.body);
 
   post
     .save()

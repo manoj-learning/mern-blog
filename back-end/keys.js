@@ -1,4 +1,5 @@
 module.exports = {
+  //this is temperory
   MONGOURI:
-    "mongodb+srv://admin:admin@mern-blog-cluster.s0bfz.mongodb.net/blog-db?retryWrites=true&w=majority",
+    "mongodb+srv://dev:dev@sl-api-free.mfu93.mongodb.net/blog-db?retryWrites=true&w=majority",
 };

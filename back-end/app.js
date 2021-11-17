@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 5000;
 //require models
 require("./models/post");
 require("./models/category");
+require("./models/comment");
 // end require models
 
 //mongodb
@@ -36,7 +37,11 @@ app.get("/category", (req, res) => {
 });
 
 app.use(express.json());
-app.use(require("./routes/post"), require("./routes/category"));
+app.use(
+  require("./routes/post"),
+  require("./routes/category"),
+  require("./routes/comment")
+);
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);

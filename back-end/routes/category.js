@@ -4,8 +4,20 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Category = mongoose.model("Category");
 
-router.get("/categories", (req, res) => {
+router.get("/category/all", (req, res) => {
   Category.find()
+    .then((categories) => {
+      res.json({
+        categories,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+router.get("/count/all", (req, res) => {
+  Category.count({})
     .then((categories) => {
       res.json({
         categories,
